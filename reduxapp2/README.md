@@ -1,4 +1,4 @@
-npm init -y
+npm init -y,
 npm install redux
 
 1. state
