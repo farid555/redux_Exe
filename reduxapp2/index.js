@@ -3,15 +3,25 @@ const { createStore } = require("redux");
 const INCREMENT = "INCREMENT";
 const DECREMENT = "DECREMENT";
 const RESET = "RESET";
+const INCREMENT_BY_VALUE = "INCREMENT_BY_VALUE";
+const ADD_USER = "ADD_USER";
 
 // state
 
 const initialCounterState = {
-    count: 0,
+    count: 1,
+    users: ["farid"],
 };
 
 //action is an Object it has type and payload
 //INCREMENT count
+
+const addUser = (name) => {
+    return {
+        type: ADD_USER,
+        payload: name,
+    };
+};
 
 const incrementCounter = () => {
     return {
@@ -31,7 +41,14 @@ const resetCounter = () => {
     };
 };
 
-// reducer for counter
+const incrementCounterByValue = (value) => {
+    return {
+        type: INCREMENT_BY_VALUE,
+        payload: value,
+    };
+};
+
+// reducer for counter(state, action)
 //action:- (type and payload)
 
 const counterReducer = (state = initialCounterState, action) => {
@@ -50,6 +67,17 @@ const counterReducer = (state = initialCounterState, action) => {
             return {
                 ...state,
                 count: 0,
+            };
+        case INCREMENT_BY_VALUE:
+            return {
+                ...state,
+                count: state.count + action.payload,
+            };
+        case ADD_USER:
+            return {
+                ...state,
+                users: [...state.users, action.payload],
+                count: state.count + 1,
             };
         default:
             return state;
@@ -71,8 +99,4 @@ store.subscribe(() => {
 
 //dispatch action
 
-store.dispatch(incrementCounter());
-store.dispatch(incrementCounter());
-store.dispatch(incrementCounter());
-store.dispatch(decrementCounter());
-store.dispatch(resetCounter());
+store.dispatch(addUser("Mohammad"));
